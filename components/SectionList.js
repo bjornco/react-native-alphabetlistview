@@ -49,6 +49,11 @@ class SectionList extends Component {
     //UIManager.findSubviewIn(e.target, rect, viewTag => {
       //this.onSectionSelect(view, true);
     //})
+
+    if (!this.measure) {
+      return;
+    }
+
     let targetY = ev.pageY;
     const { y, height } = this.measure;
     if(!y || targetY < y){
