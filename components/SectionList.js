@@ -4,6 +4,8 @@ var React = require('react');
 var ReactNative = require('react-native');
 var {Component, PropTypes} = React;
 var {StyleSheet, View, Text, NativeModules} = ReactNative;
+var reactMixin = require('react-mixin');
+var TimerMixin = require('react-timer-mixin');
 var UIManager = NativeModules.UIManager;
 
 var noop = () => {};
@@ -75,7 +77,7 @@ class SectionList extends Component {
   onMeasure() {
     if (this && this.refs) {
       const sectionItem = this.refs.sectionItem0;
-      this.measureTimer = setTimeout(() => {
+      this.measureTimer = this.setTimeout(() => {
         sectionItem.measure((x, y, width, height, pageX, pageY) => {
           //console.log([x, y, width, height, pageX, pageY]);
           this.measure = {
@@ -88,7 +90,7 @@ class SectionList extends Component {
   }
 
   componentWillUnmount() {
-    this.measureTimer && clearTimeout(this.measureTimer);
+    this.measureTimer && this.clearTimeout(this.measureTimer);
   }
 
   render() {
@@ -202,5 +204,7 @@ var styles = StyleSheet.create({
     color: '#CCCCCC'
   }
 });
+
+reactMixin(SectionList.prototype, TimerMixin);
 
 module.exports = SectionList;
